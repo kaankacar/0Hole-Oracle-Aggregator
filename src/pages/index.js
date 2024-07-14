@@ -3,23 +3,27 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import 'tailwindcss/tailwind.css';
+import { format } from 'date-fns';
 
 export default function Home() {
   const [prices, setPrices] = useState({ pythPrice: null, chainlinkPrice: null, averagePrice: null });
   const [pythHistory, setPythHistory] = useState([]);
   const [chainlinkHistory, setChainlinkHistory] = useState([]);
   const [averageHistory, setAverageHistory] = useState([]);
+  const [labels, setLabels] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState('All');
 
   useEffect(() => {
     const fetchPrices = async () => {
       try {
         const response = await axios.get('/api/price');
+        const now = new Date();
         setPrices(response.data);
 
         setPythHistory(prevHistory => [...prevHistory, response.data.pythPrice].slice(-30));
         setChainlinkHistory(prevHistory => [...prevHistory, response.data.chainlinkPrice].slice(-30));
         setAverageHistory(prevHistory => [...prevHistory, response.data.averagePrice].slice(-30));
+        setLabels(prevLabels => [...prevLabels, format(now, 'HH:mm:ss')].slice(-30));
       } catch (error) {
         console.error('Error fetching prices:', error);
       }
@@ -32,7 +36,7 @@ export default function Home() {
   }, []);
 
   const data = {
-    labels: Array.from({ length: pythHistory.length }, (_, i) => i + 1),
+    labels: labels,
     datasets: [
       {
         label: 'Pyth Network',
@@ -67,16 +71,21 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 flex">
-      <div className="flex flex-col items-center space-y-4 w-3/4">
-        <h1 className="text-5xl font-bold mb-4">Oracle Aggregator</h1>
+      <div className="flex flex-col items-center space-y-4 w-2/3">
+        <header className="flex justify-between w-full items-center mb-4">
+          <div className="flex items-center">
+            <img src="/logo.png" alt="0hole Logo" className="w-10 h-10 mr-4" />
+            <h1 className="text-3xl font-bold">0hole Oracle Aggregator</h1>
+          </div>
+        </header>
         <div className="w-full max-w-6xl p-6 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4">Price History</h2>
-          <div className="h-96">
+          <h2 className="text-2xl font-semibold mb-4">SOL/USD Price History</h2>
+          <div className="h-80">
             <Line data={data} />
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center w-1/4 space-y-4">
+      <div className="flex flex-col items-center w-1/3 space-y-6">
         <select 
           className="bg-gray-900 text-white p-2 rounded-lg border border-gray-700"
           value={selectedProvider}
@@ -95,19 +104,19 @@ export default function Home() {
           Swap Now on Raydium
         </a>
         {selectedProvider === 'All' || selectedProvider === 'Pyth' ? (
-          <div className="text-center  p-4 rounded-lg shadow-lg w-full">
+          <div className="text-center p-4 rounded-lg shadow-lg w-full">
             <h2 className="text-2xl font-semibold">PYTH NETWORK</h2>
             <div className="text-4xl font-bold">${prices.pythPrice}</div>
           </div>
         ) : null}
         {selectedProvider === 'All' || selectedProvider === 'Chainlink' ? (
-          <div className="text-center  p-4 rounded-lg shadow-lg w-full">
+          <div className="text-center p-4 rounded-lg shadow-lg w-full">
             <h2 className="text-2xl font-semibold">CHAINLINK</h2>
             <div className="text-4xl font-bold">${prices.chainlinkPrice}</div>
           </div>
         ) : null}
         {selectedProvider === 'All' ? (
-          <div className="text-center  p-4 rounded-lg shadow-lg w-full">
+          <div className="text-center p-4 rounded-lg shadow-lg w-full">
             <h2 className="text-2xl font-semibold">AVERAGE PRICE</h2>
             <div className="text-4xl font-bold">${prices.averagePrice}</div>
           </div>
