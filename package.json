@@ -9,7 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chainlink/solana-sdk": "^0.2.2",
+    "@pythnetwork/client": "^2.21.1",
+    "@pythnetwork/price-service-client": "^1.9.0",
+    "@solana/web3.js": "^1.95.0",
     "autoprefixer": "10.4.19",
+    "axios": "^1.7.2",
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.5",
     "next": "14.2.5",
