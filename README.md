@@ -1,38 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 0hole Oracle Aggregator ![](../oracle-aggregator/public/logo.png)
 
-## Getting Started
+## Description
 
-First, run the development server:
+0hole Oracle Aggregator is a web3 app that fetches SOL/USD price data from Pyth Network and Chainlink oracles. The application displays the real-time prices and their average, and also visualizes the price history using a line chart. Users can filter the displayed data by selecting a specific oracle or view data from both oracles simultaneously.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Fetch real-time SOL/USD prices from Pyth Network and Chainlink.
+- Calculate and display the average price.
+- Visualize the price history in a line chart.
+- Dropdown to filter data by specific oracle providers.
+- "Swap Now on Raydium" button that redirects to the Raydium swap page.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Technologies Used
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Next.js
+- React
+- Chart.js
+- Tailwind CSS
+- Axios
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Clone the repository:
+    ```bash
+    git clone <repository_url>
+    cd <repository_name>
+    ```
 
-## Learn More
+2. Install the dependencies:
+    ```bash
+    npm install
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+3. Start the development server:
+    ```bash
+    npm run dev
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Open your browser and navigate to `http://localhost:3000`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## API Endpoints
 
-## Deploy on Vercel
+- `/api/price`: Fetches the latest SOL/USD prices from Pyth Network and Chainlink, and calculates the average price.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Usage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Open the application in your browser.
+2. Use the dropdown menu to filter data by specific oracle providers or view data from all providers.
+3. Click the "Swap Now on Raydium" button to go to the Raydium swap page.
+
+## License
+
+This project is licensed under the MIT License.
