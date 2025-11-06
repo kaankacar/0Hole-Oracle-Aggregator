@@ -19,13 +19,9 @@ const fetchPythPrice = async () => {
 };
 
 const fetchChainlinkPrice = async () => {
-  let dataFeed = await OCR2Feed.load(chainlinkProgramId, { connection });
-  let price = await new Promise((resolve) => {
-    dataFeed.onRound(chainlinkFeedAddress, (event) => {
-      resolve(event.answer.toNumber() / Math.pow(10, 8)); // Çıkan sayıyı uygun formata dönüştürün
-    });
-  });
-  return price;
+  const dataFeed = await OCR2Feed.load(chainlinkProgramId, { connection });
+  const latestRound = await dataFeed.getLatestRound(chainlinkFeedAddress);
+  return latestRound.answer.toNumber() / Math.pow(10, 8);
 };
 
 export default async function handler(req, res) {
